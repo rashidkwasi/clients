@@ -21,6 +21,9 @@ class Invoice extends Model
         'businessid',
         'createdby',
         'created_at',
-        'clientid'
+        'clientid',
+        'item',
+        'description',
+        'tdate'
     ];
 }

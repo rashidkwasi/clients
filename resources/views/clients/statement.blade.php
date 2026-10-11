@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://js.paystack.co/v1/inline.js"></script>
 
     <title>Client Account Statement</title>
 
@@ -299,6 +300,8 @@
             }
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
 </head>
 
 <body>
@@ -313,11 +316,10 @@
 
     <div class="statement">
 
-        Header
         <header class="header">
             <div>
-                <h1>Account Statement</h1>
-                <p>Client financial overview</p>
+                <h1>TPOS Systems</h1>
+                <p>Client subscription overview</p>
             </div>
 
             <div class="header-right">
@@ -325,7 +327,7 @@
                 <strong>{{ now()->format('d M Y') }}</strong>
 
                 <div>
-                    Client ID: {{ $client->id }}
+                    Client ID: {{ $client->clientid }}
                 </div>
             </div>
         </header>
@@ -369,7 +371,6 @@
                 </div>
             </section>
 
-            Account Summary
             <section class="section">
                 <h2 class="section-title">Account Summary</h2>
 
@@ -410,7 +411,6 @@
                 </div>
             </section>
 
-            Invoice History
             <section class="section">
                 <h2 class="section-title">Invoice History</h2>
 
@@ -418,11 +418,11 @@
                     <table>
                         <thead>
                         <tr>
-                            <th>#</th>
-                            <th>Invoice Reference</th>
+{{--                            <th>#</th>--}}
+{{--                            <th>Ref</th>--}}
                             <th>Date</th>
-                            <th class="text-right">Total Amount</th>
-                            <th class="text-right">Amount Paid</th>
+                            <th class="text-right">Amount</th>
+                            <th class="text-right">Paid</th>
                             <th class="text-right">Balance</th>
                             <th class="text-right">Action</th>
                         </tr>
@@ -431,11 +431,11 @@
                         <tbody>
                         @forelse($invoices as $invoice)
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
+{{--                                <td>{{ $loop->iteration }}</td>--}}
 
-                                <td>
-                                    {{ $invoice->invoice_number ?? $invoice->invoicenumber ?? $invoice->id }}
-                                </td>
+{{--                                <td>--}}
+{{--                                    {{ $invoice->invoice_number ?? $invoice->invoicenumber ?? $invoice->id }}--}}
+{{--                                </td>--}}
 
                                 <td>
                                     {{ $invoice->invoice_date
@@ -452,9 +452,32 @@
                                 <td class="text-right">
                                     {{ number_format((float) ($invoice->totalamount - $invoice->paidamount ?? 0), 2) }}
                                 </td>
+{{--                                <td class="text-right">--}}
+{{--                                    @if (($invoice->totalamount - $invoice->paidamount) > 0)--}}
+{{--                                        <button type="button" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">--}}
+{{--                                            Pay--}}
+{{--                                        </button>--}}
+{{--                                    @else--}}
+{{--                                        {{ number_format(0, 2) }}--}}
+{{--                                    @endif--}}
+{{--                                </td>--}}
+
+
                                 <td class="text-right">
                                     @if (($invoice->totalamount - $invoice->paidamount) > 0)
-                                        <button type="button" class="btn btn-primary">
+                                        @php
+                                            $outstanding = $invoice->totalamount - $invoice->paidamount;
+                                        @endphp
+                                        <button
+                                            type="button"
+                                            class="pay-btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
+                                            data-amount="{{ $outstanding }}"
+                                            data-invoice-id="{{ $invoice->id }}"
+                                            data-invoice-ref="{{ $invoice->invoiceno }}"
+                                            data-email="{{ $client->email }}"
+                                            data-item="{{$invoice->item}}"
+                                            data-description="{{$invoice->description}}"
+                                        >
                                             Pay
                                         </button>
                                     @else
@@ -475,7 +498,6 @@
                 </div>
             </section>
 
-            Payment History
             <section class="section">
                 <h2 class="section-title">Payment History</h2>
 
@@ -524,12 +546,108 @@
         </main>
 
         <footer class="footer">
-            <span>Client Account Statement</span>
+            <span>TPOS Client Account Statement</span>
             <span>Generated on {{ now()->format('d M Y') }}</span>
         </footer>
 
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const PAYSTACK_PUBLIC_KEY = "{{ config('services.paystack.public_key') }}";
+       // const PAYSTACK_PUBLIC_KEY = "pk_test_1135ac82f739e73525044a2d24d29aa83be72488"
+
+        const CSRF_TOKEN = "{{ csrf_token() }}";
+
+        document.querySelectorAll('.pay-btn').forEach(function (button) {
+            button.addEventListener('click', function () {
+                const amount       = parseFloat(button.dataset.amount);
+                const invoiceId    = button.dataset.invoiceId;
+                const invoiceRef   = button.dataset.invoiceRef;
+                const email        = button.dataset.email;
+                const description = button.dataset.description
+                const item = button.dataset.item
+
+                if (!email) {
+                    alert('No email address on file. Please contact support.');
+                    return;
+                }
+
+                if (!amount || amount <= 0) {
+                    alert('Invalid payment amount.');
+                    return;
+                }
+
+                const handler = PaystackPop.setup({
+                    key: PAYSTACK_PUBLIC_KEY,
+                    email: email,
+                    amount: Math.round(amount * 100), // Paystack uses kobo/pesewas (smallest unit)
+                    currency: 'GHS', // Change to 'NGN', 'ZAR', 'USD', 'KES' as needed
+                    ref: 'TPOS-' + invoiceId + '-' + Date.now(),
+                    metadata: {
+                        custom_fields: [
+                            {
+                                display_name: "Invoice Reference",
+                                variable_name: "invoice_ref",
+                                value: invoiceRef
+                            },
+                            {
+                                display_name: "Client ID",
+                                variable_name: "client_id",
+                                value: "{{ $client->clientid }}"
+                            },
+                            {
+                                display_name: "description",
+                                variable_name: "description",
+                                value: description
+                            },
+                            {
+                                display_name: "item",
+                                variable_name: "item",
+                                value: item
+                            }
+
+                        ]
+                    },
+                    callback: function (response) {
+                        // Send reference to your backend for verification
+                        fetch("{{ route('paystack.verify') }}", {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': CSRF_TOKEN
+                            },
+                            body: JSON.stringify({
+                                reference: response.reference,
+                                invoice_id: invoiceId,
+                                amount: amount
+                            })
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.success) {
+                                    alert('Payment successful! Reference: ' + response.reference);
+                                    window.location.reload();
+                                } else {
+                                    alert('Payment verification failed: ' + (data.message || 'Unknown error'));
+                                }
+                            })
+                            .catch(err => {
+                                console.error(err);
+                                alert('Payment received but verification failed. Please contact support with reference: ' + response.reference);
+                            });
+                    },
+                    onClose: function () {
+                        console.log('Payment window closed.');
+                    }
+                });
+
+                handler.openIframe();
+            });
+        });
+    });
+</script>
 
 </body>
 </html>

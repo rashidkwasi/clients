@@ -13,11 +13,27 @@ class Payment extends Model
         'item',
         'description',
         'amount',
+        'fees',
         'createdby',
         'created_at',
         'status',
         'businessid',
         'paymentno',
-        'invoiceno'
+        'invoiceno',
+        'tdate',
+        'currency',
+        'channel',
+        'bank',
+        'mobilenumber',
+        'reference',
+        'receiptno'
+
     ];
 }
+
+
+
+
+
+
+
