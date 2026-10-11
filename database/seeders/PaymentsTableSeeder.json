@@ -1,0 +1,35 @@
+[
+  {
+    "clientid": "CL001",
+    "item": "Service Payment",
+    "description": "Monthly service fee",
+    "amount": 500.00,
+    "createdby": "admin",
+    "created_at": "2023-01-20 11:00:00",
+    "status": 1,
+    "businessid": "BUS001",
+    "paymentno": "PAY001"
+  },
+  {
+    "clientid": "CL002",
+    "item": "Product Purchase",
+    "description": "Bulk order payment",
+    "amount": 1250.25,
+    "createdby": "admin",
+    "created_at": "2023-02-10 16:45:00",
+    "status": 1,
+    "businessid": "BUS001",
+    "paymentno": "PAY002"
+  },
+  {
+    "clientid": "CL003",
+    "item": "Consultation Fee",
+    "description": "Project consultation",
+    "amount": 800.00,
+    "createdby": "admin",
+    "created_at": "2023-03-05 14:20:00",
+    "status": 1,
+    "businessid": "BUS002",
+    "paymentno": "PAY003"
+  }
+]

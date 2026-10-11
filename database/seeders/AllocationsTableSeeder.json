@@ -1,0 +1,112 @@
+[
+  {
+    "allocationcode": "AL001",
+    "allocationname": "Marketing Budget",
+    "allocationtype": "Expense",
+    "amount": 5000.00,
+    "status": 1,
+    "storeid": "S001",
+    "businessid": "BUS001",
+    "createdby": "admin",
+    "modifiedby": "admin"
+  },
+  {
+    "allocationcode": "AL002",
+    "allocationname": "Staff Salaries",
+    "allocationtype": "Expense",
+    "amount": 15000.00,
+    "status": 1,
+    "storeid": "S001",
+    "businessid": "BUS001",
+    "createdby": "admin",
+    "modifiedby": "admin"
+  },
+  {
+    "allocationcode": "AL003",
+    "allocationname": "Office Rent",
+    "allocationtype": "Expense",
+    "amount": 3000.00,
+    "status": 1,
+    "storeid": "S002",
+    "businessid": "BUS001",
+    "createdby": "admin",
+    "modifiedby": "admin"
+  },
+  {
+    "allocationcode": "AL004",
+    "allocationname": "IT Infrastructure",
+    "allocationtype": "Expense",
+    "amount": 8000.00,
+    "status": 1,
+    "storeid": "S001",
+    "businessid": "BUS002",
+    "createdby": "admin",
+    "modifiedby": "admin"
+  },
+  {
+    "allocationcode": "AL005",
+    "allocationname": "Product Development",
+    "allocationtype": "Expense",
+    "amount": 12000.00,
+    "status": 1,
+    "storeid": "S003",
+    "businessid": "BUS001",
+    "createdby": "admin",
+    "modifiedby": "admin"
+  },
+  {
+    "allocationcode": "AL006",
+    "allocationname": "Training Programs",
+    "allocationtype": "Expense",
+    "amount": 2500.00,
+    "status": 1,
+    "storeid": "S001",
+    "businessid": "BUS003",
+    "createdby": "admin",
+    "modifiedby": "admin"
+  },
+  {
+    "allocationcode": "AL007",
+    "allocationname": "Customer Support",
+    "allocationtype": "Expense",
+    "amount": 4000.00,
+    "status": 1,
+    "storeid": "S002",
+    "businessid": "BUS002",
+    "createdby": "admin",
+    "modifiedby": "admin"
+  },
+  {
+    "allocationcode": "AL008",
+    "allocationname": "Marketing Campaigns",
+    "allocationtype": "Expense",
+    "amount": 6500.00,
+    "status": 1,
+    "storeid": "S003",
+    "businessid": "BUS001",
+    "createdby": "admin",
+    "modifiedby": "admin"
+  },
+  {
+    "allocationcode": "AL009",
+    "allocationname": "Research & Development",
+    "allocationtype": "Expense",
+    "amount": 10000.00,
+    "status": 1,
+    "storeid": "S001",
+    "businessid": "BUS003",
+    "createdby": "admin",
+    "modifiedby": "admin"
+  },
+  {
+    "allocationcode": "AL010",
+    "allocationname": "Operations Budget",
+    "allocationtype": "Expense",
+    "amount": 7500.00,
+    "status": 1,
+    "storeid": "S002",
+    "businessid": "BUS001",
+    "createdby": "admin",
+    "modifiedby": "admin"
+  }
+]

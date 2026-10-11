@@ -1,0 +1,102 @@
+[
+  {
+    "planname": "Basic Plan",
+    "description": "Essential features for small businesses",
+    "price": 29.99,
+    "billingcycle": "Monthly",
+    "features": "Basic reporting, 10 users, 5GB storage",
+    "status": 1,
+    "businessid": "BUS001",
+    "createdby": "admin"
+  },
+  {
+    "planname": "Professional Plan",
+    "description": "Advanced features for growing businesses",
+    "price": 59.99,
+    "billingcycle": "Monthly",
+    "features": "Advanced reporting, 50 users, 20GB storage, API access",
+    "status": 1,
+    "businessid": "BUS001",
+    "createdby": "admin"
+  },
+  {
+    "planname": "Enterprise Plan",
+    "description": "Complete solution for large organizations",
+    "price": 99.99,
+    "billingcycle": "Monthly",
+    "features": "All features, unlimited users, 100GB storage, Priority support, Custom integrations",
+    "status": 1,
+    "businessid": "BUS002",
+    "createdby": "admin"
+  },
+  {
+    "planname": "Starter Plan",
+    "description": "Perfect for individuals and startups",
+    "price": 19.99,
+    "billingcycle": "Monthly",
+    "features": "Basic reporting, 5 users, 2GB storage",
+    "status": 1,
+    "businessid": "BUS003",
+    "createdby": "admin"
+  },
+  {
+    "planname": "Premium Plan",
+    "description": "Enhanced features for professional use",
+    "price": 79.99,
+    "billingcycle": "Monthly",
+    "features": "Advanced reporting, 100 users, 50GB storage, API access, Custom domains",
+    "status": 1,
+    "businessid": "BUS001",
+    "createdby": "admin"
+  },
+  {
+    "planname": "Ultimate Plan",
+    "description": "Full-featured solution with dedicated support",
+    "price": 149.99,
+    "billingcycle": "Monthly",
+    "features": "All features, unlimited users, 200GB storage, Priority support, Dedicated account manager",
+    "status": 1,
+    "businessid": "BUS002",
+    "createdby": "admin"
+  },
+  {
+    "planname": "Business Plan",
+    "description": "Comprehensive solution for business operations",
+    "price": 49.99,
+    "billingcycle": "Monthly",
+    "features": "Standard reporting, 25 users, 10GB storage, Email support",
+    "status": 1,
+    "businessid": "BUS003",
+    "createdby": "admin"
+  },
+  {
+    "planname": "Growth Plan",
+    "description": "Scalable features for expanding businesses",
+    "price": 89.99,
+    "billingcycle": "Monthly",
+    "features": "Advanced reporting, 75 users, 30GB storage, API access, Priority support",
+    "status": 1,
+    "businessid": "BUS001",
+    "createdby": "admin"
+  },
+  {
+    "planname": "Custom Plan",
+    "description": "Tailored solution for specific business needs",
+    "price": 0.00,
+    "billingcycle": "Monthly",
+    "features": "Custom features, unlimited users, custom storage, 24/7 support",
+    "status": 1,
+    "businessid": "BUS002",
+    "createdby": "admin"
+  },
+  {
+    "planname": "Startup Plan",
+    "description": "Budget-friendly solution for startups",
+    "price": 14.99,
+    "billingcycle": "Monthly",
+    "features": "Basic reporting, 3 users, 1GB storage, Email support",
+    "status": 1,
+    "businessid": "BUS003",
+    "createdby": "admin"
+  }
+]
