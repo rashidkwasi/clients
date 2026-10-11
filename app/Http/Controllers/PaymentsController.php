@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Traits\HttpResponses;
 use App\Services\SmsService;
 use App\Models\Customer;
-use App\Models\invoice;
+use App\Models\Invoice;
 
 class PaymentsController extends Controller
 {
@@ -73,7 +73,7 @@ class PaymentsController extends Controller
     private function updateInvoicePaidAmount($invoiceNo, $amount)
     {
         try {
-            $invoice = invoice::where('invoiceno', $invoiceNo)->first();
+            $invoice = Invoice::where('invoiceno', $invoiceNo)->first();
 
             if ($invoice) {
                 // Add the payment amount to the existing paid amount
@@ -111,7 +111,7 @@ class PaymentsController extends Controller
     {
         try {
             // Get all outstanding invoices for the client
-            $outstandingInvoices = invoice::where('clientid', $payment->clientid)
+            $outstandingInvoices = Invoice::where('clientid', $payment->clientid)
                 ->where('paidamount', '<', 'totalamount')
                 ->orderBy('created_at') // Optional: prioritize older invoices first
                 ->get();

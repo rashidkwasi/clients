@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\invoice;
+use App\Models\Invoice;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Traits\HttpResponses;
@@ -18,7 +18,7 @@ class InvoicesController extends Controller
      */
     public function index()
     {
-        $invoices = invoice::where('businessid', auth()->user()->businessid)->get();
+        $invoices = Invoice::where('businessid', auth()->user()->businessid)->get();
         return $this->success($invoices);
     }
 
@@ -34,6 +34,7 @@ class InvoicesController extends Controller
                 'invoiceno' => 'required|string|max:20|unique:invoices,invoiceno',
                 'period_start' => 'required|date',
                 'period_end' => 'required|date',
+                'clientid' => 'required|string',
                 'month' => 'required|string|max:2',
                 'year' => 'required|string|max:4',
                 'totalamount' => 'required|numeric',
@@ -45,12 +46,13 @@ class InvoicesController extends Controller
                 'created_at' => 'required|date',
             ]);
 
-            $invoice = invoice::create([
+            $invoice = Invoice::create([
                 'invoiceno' => $request->invoiceno,
                 'period_start' => $request->period_start,
                 'period_end' => $request->period_end,
                 'month' => $request->month,
                 'year' => $request->year,
+                'clientid' => $request->clientid,
                 'totalamount' => $request->totalamount,
                 'paidamount' => $request->paidamount,
                 'duedate' => $request->duedate,
@@ -82,7 +84,7 @@ class InvoicesController extends Controller
         // You can implement the logic to find customer information from invoice data
         // For now, we'll just log that the method was called
         \Log::info("Invoice created - SMS notification would be sent here");
-        
+
         // Example implementation if you have customer information in the invoice:
         // $customer = Customer::where('businessid', $invoice->businessid)->first();
         // if ($customer && $customer->telephone) {
@@ -97,7 +99,7 @@ class InvoicesController extends Controller
      */
     public function show($invoice)
     {
-        $invoice = invoice::find($invoice);
+        $invoice = Invoice::find($invoice);
 
         if (!$invoice) {
             return response()->json(['message' => 'Record not found'], 404);
@@ -119,7 +121,7 @@ class InvoicesController extends Controller
         DB::beginTransaction();
 
         try {
-            $invoice = invoice::find($invoiceId);
+            $invoice = Invoice::find($invoiceId);
 
             if (!$invoice) {
                 return response()->json(['message' => 'Record not found'], 404);
@@ -141,6 +143,7 @@ class InvoicesController extends Controller
                 'duedate' => 'date',
                 'status' => 'integer',
                 'businessid' => 'string|max:45',
+                'clientid' => 'string|max:45',
                 'createdby' => 'string|max:45',
                 'created_at' => 'date',
             ]);
@@ -180,7 +183,7 @@ class InvoicesController extends Controller
         DB::beginTransaction();
 
         try {
-            $invoice = invoice::find($invoiceId);
+            $invoice = Invoice::find($invoiceId);
 
             if (!$invoice) {
                 return response()->json(['message' => 'Record not found'], 404);

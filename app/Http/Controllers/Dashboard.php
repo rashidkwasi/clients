@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Ledger;
 use App\Models\Receipt;
-use App\Models\payment;
+use App\Models\Payment;
 use App\Models\TrnxHdr;
 use app\Traits\HttpResponses;
 use Illuminate\Http\Request;
@@ -98,7 +98,7 @@ class Dashboard extends Controller
             ->groupBy('customercode')
             ->get();
 
-             $payments = payment::select(
+             $payments = Payment::select(
                 'customercode',
                 DB::raw('SUM(amount) as amount')
             )
@@ -109,7 +109,7 @@ class Dashboard extends Controller
             ->groupBy('customercode')
             ->get();
 
-             $postdatedpayments = payment::select(
+             $postdatedpayments = Payment::select(
                 'customercode','maturitydate','amount'
             )
             ->where('businessid', $businessid)

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
             $table->string('invoiceno')->unique();
+            $table->string('clientid');
             $table->date('period_start');
             $table->date('period_end');
             $table->string('month', 2);

@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use App\Models\Invoice;
+use App\Models\Payment;
+use App\Models\Plan;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Traits\HttpResponses;
 
@@ -127,16 +131,63 @@ class ClientsController extends Controller
     /**
      * Delete a client record
      */
-    public function destroy($id)
+    public function getClientInformation(Request $request, Client $client)
     {
-        $client = Client::find($id);
+        // Get all invoices for the client
+        $invoices = Invoice::where('clientid', $client->id)->get();
 
-        if (!$client) {
-            return response()->json(['message' => 'Record not found'], 404);
-        }
+        // Get all payments for the client
+        $payments = Payment::where('clientid', $client->id)->get();
 
-        $client->delete();
+        // Calculate the total invoice amount
+        $totalInvoices = Invoice::where('clientid', $client->id)
+            ->sum('amount');
 
-        return response()->json(['message' => 'Record deleted successfully']);
+        // Calculate the total payment amount
+        $totalPayments = Payment::where('clientid', $client->id)
+            ->sum('amount');
+
+        // Calculate the outstanding balance
+        $balance = $totalInvoices - $totalPayments;
+
+        // Prepare the response payload
+        $datapayload = [
+            "datapayload" => [
+                "client" => $client,
+                "invoices" => $invoices,
+                "payments" => $payments,
+                "total_invoices" => $totalInvoices,
+                "total_payments" => $totalPayments,
+                "balance" => $balance,
+            ]
+        ];
+
+        // Return the response
+        return $this->success($datapayload);
+    }
+
+    public function getClientInformationphp(Request $request,Client $client)
+    {
+
+        $invoices = Invoice::where('clientid', $client->clientid)->get();
+
+        $payments = Payment::where('clientid', $client->clientid)->get();
+
+        $totalInvoices = Invoice::where('clientid', $client->clientid)
+            ->sum('totalamount');
+
+        $totalPayments = Payment::where('clientid', $client->clientid)
+            ->sum('amount');
+
+        $balance = $totalInvoices - $totalPayments;
+
+        return view('clients.statement', compact(
+            'client',
+            'invoices',
+            'payments',
+            'totalInvoices',
+            'totalPayments',
+            'balance'
+        ));
     }
 }

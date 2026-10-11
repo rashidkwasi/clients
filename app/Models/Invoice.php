@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class invoice extends Model
+class Invoice extends Model
 {
     protected $table = 'invoices';
 
@@ -20,6 +20,7 @@ class invoice extends Model
         'status',
         'businessid',
         'createdby',
-        'created_at'
+        'created_at',
+        'clientid'
     ];
 }
