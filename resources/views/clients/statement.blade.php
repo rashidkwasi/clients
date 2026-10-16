@@ -472,8 +472,8 @@
                                             type="button"
                                             class="pay-btn bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded"
                                             data-amount="{{ $outstanding }}"
-                                            data-invoice-id="{{ $invoice->id }}"
-                                            data-invoice-ref="{{ $invoice->invoiceno }}"
+                                            data-invoiceid="{{ $invoice->id }}"
+                                            data-invoiceref="{{ $invoice->invoiceno }}"
                                             data-email="{{ $client->email }}"
                                             data-item="{{$invoice->item}}"
                                             data-description="{{$invoice->description}}"
@@ -563,8 +563,8 @@
         document.querySelectorAll('.pay-btn').forEach(function (button) {
             button.addEventListener('click', function () {
                 const amount       = parseFloat(button.dataset.amount);
-                const invoiceId    = button.dataset.invoiceId;
-                const invoiceRef   = button.dataset.invoiceRef;
+                const invoiceId    = button.dataset.invoiceid;
+                const invoiceRef   = button.dataset.invoiceref;
                 const email        = button.dataset.email;
                 const description = button.dataset.description
                 const item = button.dataset.item
@@ -584,7 +584,7 @@
                     email: email,
                     amount: Math.round(amount * 100), // Paystack uses kobo/pesewas (smallest unit)
                     currency: 'GHS', // Change to 'NGN', 'ZAR', 'USD', 'KES' as needed
-                    ref: 'TPOS-' + invoiceId + '-' + Date.now(),
+                    ref: "{{ $client->clientid }}" +'-'+ invoiceRef + '-' + Date.now(),
                     metadata: {
                         custom_fields: [
                             {

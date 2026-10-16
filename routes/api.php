@@ -22,6 +22,9 @@ Route::get('/user', function (Request $request) {
 
 Route::post('/paystack/verify', [PaystackController::class, 'verify'])
     ->name('paystack.verify');
+
+Route::match(['get', 'post'], '/webhook', [PaystackController::class, 'webhook']);
+//Route::post('/webhook', [PaystackController::class, 'webhook']);
  //   ->middleware('auth'); // or your client auth middleware
 
 //Route::post('/login',[AuthController::class,'login']);
