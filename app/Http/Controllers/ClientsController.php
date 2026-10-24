@@ -181,7 +181,7 @@ class ClientsController extends Controller
 
         $balance = $totalInvoices - $totalPayments;
 
-        return view('clients.statement', compact(
+        return view('statement', compact(
             'client',
             'invoices',
             'payments',

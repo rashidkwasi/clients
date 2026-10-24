@@ -10,9 +10,9 @@ Route::get('/', function () {
 
 
 Route::get(
-    '/clients/{client}/statement',
+    '/{client}/statement',
     [ClientsController::class, 'getClientInformationphp']
-)->name('clients.statement');
+)->name('statement');
 
 
 

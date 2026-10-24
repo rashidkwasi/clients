@@ -318,8 +318,9 @@
 
         <header class="header">
             <div>
-                <h1>TPOS Systems</h1>
-                <p>Client subscription overview</p>
+                <h1>TCLUB Systems</h1>
+                <h1>Tpos App</h1>
+                <h1>Tel/Momo : 059 896 3370</h1>
             </div>
 
             <div class="header-right">
@@ -341,9 +342,16 @@
                 <div class="client-grid">
 
                     <div class="detail">
-                        <div class="detail-label">Client Name</div>
+                        <div class="detail-label">Business Name</div>
                         <div class="detail-value">
                             {{ $client->business_name ?? $client->fullname ?? 'N/A' }}
+                        </div>
+                    </div>
+
+                    <div class="detail">
+                        <div class="detail-label">Contact Person</div>
+                        <div class="detail-value">
+                            {{ $client->business_owner }}
                         </div>
                     </div>
 
@@ -376,19 +384,27 @@
 
                 <div class="summary-grid">
 
+{{--                    <div class="summary-card invoiced">--}}
+{{--                        <div class="summary-label">Total Invoices</div>--}}
+{{--                        <div class="summary-amount">--}}
+{{--                            {{ number_format($totalInvoices, 2) }}--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+
+
+{{--                    <div class="summary-card paid">--}}
+{{--                        <div class="summary-label">Total Payments</div>--}}
+{{--                        <div class="summary-amount">--}}
+{{--                            {{ number_format($totalPayments, 2) }}--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+
                     <div class="summary-card invoiced">
-                        <div class="summary-label">Total Invoices</div>
-                        <div class="summary-amount">
-                            {{ number_format($totalInvoices, 2) }}
-                        </div>
+                        <div class="summary-label">Message</div>
+                        <div class="summary-Details">In order to serve you better, kindly settle the unpaid bills below. If you are using mobile phone to view this page, scroll the invoices to the left to view the pay button for unpaid bills.</div>
+
                     </div>
 
-                    <div class="summary-card paid">
-                        <div class="summary-label">Total Payments</div>
-                        <div class="summary-amount">
-                            {{ number_format($totalPayments, 2) }}
-                        </div>
-                    </div>
 
                     <div class="summary-card {{ $balance < 0 ? 'credit' : 'balance' }}">
                         <div class="summary-label">
@@ -421,6 +437,7 @@
 {{--                            <th>#</th>--}}
 {{--                            <th>Ref</th>--}}
                             <th>Date</th>
+                            <th>Description</th>
                             <th class="text-right">Amount</th>
                             <th class="text-right">Paid</th>
                             <th class="text-right">Balance</th>
@@ -441,6 +458,10 @@
                                     {{ $invoice->invoice_date
                                         ? \Carbon\Carbon::parse($invoice->invoice_date)->format('d M Y')
                                         : ($invoice->created_at?->format('d M Y') ?? 'N/A') }}
+                                </td>
+
+                                <td>
+                                    {{ $invoice->description }}
                                 </td>
 
                                 <td class="text-right">
